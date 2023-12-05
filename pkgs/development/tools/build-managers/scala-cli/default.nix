@@ -49,6 +49,15 @@ stdenv.mkDerivation {
     runHook postInstall
   '';
 
+  doInstallCheck = true;
+  installCheckPhase = ''
+    runHook preInstallCheck
+
+    $out/bin/scala-cli version --offline
+
+    runHook postInstallCheck
+  '';
+
   # We need to call autopatchelf before generating completions
   dontAutoPatchelf = true;
 
